@@ -23,8 +23,8 @@ export interface Tags {
 export type Order = 'asc' | 'desc';
 
 export interface HeadCell {
-    disablePadding: boolean;
-    id: keyof ROOT;
-    label: string;
-    numeric: boolean;
-  }
+  disablePadding: boolean;
+  id: keyof ROOT;
+  label: string;
+  numeric: boolean;
+}

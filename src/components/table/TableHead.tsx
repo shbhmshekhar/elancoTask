@@ -6,7 +6,7 @@ import TableCell from '@mui/material/TableCell';
 import { visuallyHidden } from '@mui/utils';
 import Box from '@mui/material/Box';
 
-import { ROOT, Order, HeadCell } from './models';
+import { ROOT, Order, HeadCell } from '../../models';
 
 interface TableHeadProps {
     onRequestSort: (event: React.MouseEvent<unknown>, property: keyof ROOT) => void;
@@ -82,10 +82,11 @@ interface TableHeadProps {
           },
       ];
     return (
-        <TableHead>
+        <TableHead sx={{ backgroundColor: '#98FFF4' }}>
           <TableRow>
             {headCells.map((headCell) => (
               <TableCell
+              sx={{fontWeight: 'bold', padding:'10px', height:'auto'}}
                 key={headCell.id}
                 align={headCell.numeric ? 'right' : 'left'}
                 padding={headCell.disablePadding ? 'none' : 'normal'}
