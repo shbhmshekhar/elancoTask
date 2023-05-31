@@ -5,12 +5,14 @@ import {DATA} from './models';
 import Dropdown from './components/dropdown/Dropdown';
 
 function App() {
-
+  const [fullData, setFullData]= useState<DATA>([]);
   const [data, setData] = useState<DATA>([]);
   const[applicationDropDownAPIData, setApplicationDropDownAPIData] = useState([]);
   const [applicationSelectedOption, setApplicationSelectedOption] = useState('All');
   const [resourcesDropDownData, setResourcesDropDownData] = useState([]);
   const [selectedResource, setSelectedResource] = useState('All');
+
+  
 
 const getData1 = async (url:string) => {
   try{
@@ -27,6 +29,7 @@ const getData1 = async (url:string) => {
       (async()=> {
       const tableData = await getData1('https://engineering-task.elancoapps.com/api/raw');
       setData(tableData);
+      setFullData(tableData)
       const appDropdownApiData = await getData1('https://engineering-task.elancoapps.com/api/applications');
       setApplicationDropDownAPIData(appDropdownApiData);
       const resDropdownApiData = await getData1('https://engineering-task.elancoapps.com/api/resources');
@@ -36,7 +39,8 @@ const getData1 = async (url:string) => {
 
   useEffect(()=> {
     if(applicationSelectedOption ==='All'){
-     setData(prevState => prevState)
+     setData(fullData)
+    
     }else{
       (async ()=> {
         const tableData = await getData1(`https://engineering-task.elancoapps.com/api/applications/${applicationSelectedOption}`);
@@ -48,7 +52,7 @@ const getData1 = async (url:string) => {
 
   useEffect(()=> {
     if(selectedResource ==='All'){
-      setData(prevState => prevState)
+      setData(fullData)
      }else{
        (async ()=> {
          const tableData = await getData1(`https://engineering-task.elancoapps.com/api/resources/${selectedResource}`);
