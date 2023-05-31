@@ -91,7 +91,7 @@ const DataTable = (props:DataTableProps) => {
 
   return (
     <TableContainer component={Paper} >
-      <Table sx={{ minWidth: 500 }} aria-label='custom pagination table'>
+      <Table sx={{ minWidth: 500 }}  aria-label='custom pagination table' >
         <CustomTableHead
           order={order}
           orderBy={orderBy}
