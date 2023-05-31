@@ -11,27 +11,13 @@ import TableFooter from '@mui/material/TableFooter';
 import TablePaginationActions from './TablePaginationActions';
 import CustomTableHead from './TableHead';
 
-import { ROOT, DATA, Order } from '../../models';
+import { ROOT, DATA, Order, TableHeader, Tags } from '../../models';
 
 interface DataTableProps {
   tableData: DATA
 }
 const DataTable = (props:DataTableProps) => {
   const {tableData} = props;
-  const tableHeaders: string[] = [
-    'ConsumedQuantity',
-    'Cost',
-    'Date',
-    'InstanceId',
-    'MeterCategory',
-    'ResourceGroup',
-    'ResourceLocation',
-    'Tags',
-    'UnitOfMeasure',
-    'Location',
-    'ServiceName',
-  ];
-
  
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -91,38 +77,21 @@ const DataTable = (props:DataTableProps) => {
   }
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof ROOT
+    property: keyof TableHeader
   ) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
 
-  // const visibleRows = useMemo(
-  //   () =>
-  //     stableSort(data, getComparator(order, orderBy)).slice(
-  //       page * rowsPerPage,
-  //       page * rowsPerPage + rowsPerPage
-  //     ),
-  //   [order, orderBy, page, rowsPerPage]
-  // );
   const visibleRows = stableSort(tableData, getComparator(order, orderBy)).slice(
           page * rowsPerPage,
           page * rowsPerPage + rowsPerPage
         ) 
 
-  //TODO DISPLAY TAGS
-
   return (
     <TableContainer component={Paper} >
       <Table sx={{ minWidth: 500 }} aria-label='custom pagination table'>
-        {/* <TableHead sx={{ backgroundColor: '#98FFF4', fontStyle: 'bold' }}>
-          <TableRow>
-            {tableHeaders.map((tableHeader, i) => (
-              <TableCell align={i != 0 ? "right" : 'inherit'}>{tableHeader}</TableCell>
-            ))}
-          </TableRow>
-        </TableHead> */}
         <CustomTableHead
           order={order}
           orderBy={orderBy}
@@ -130,12 +99,8 @@ const DataTable = (props:DataTableProps) => {
           rowCount={tableData.length}
         />
         <TableBody>
-          {
-            /* {(rowsPerPage > 0
-            ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : data
-          ) */
-          visibleRows && visibleRows!.map((row, i) => (
+          { visibleRows && visibleRows!.map((row, i) => (
+            
               <TableRow key={i}>
                 <TableCell component='th' scope='row'>
                   {row.ConsumedQuantity}
@@ -146,6 +111,8 @@ const DataTable = (props:DataTableProps) => {
                 <TableCell align='right'>{row.MeterCategory}</TableCell>
                 <TableCell align='right'>{row.ResourceGroup}</TableCell>
                 <TableCell align='right'>{row.ResourceLocation}</TableCell>
+                <TableCell align='right'>{((row.Tags as unknown) as Tags).environment}</TableCell>
+                <TableCell align='right'>{((row.Tags as unknown) as Tags)["business-unit"]}</TableCell>
                 <TableCell align='right'>{row.UnitOfMeasure}</TableCell>
                 <TableCell align='right'>{row.Location}</TableCell>
                 <TableCell align='right'>{row.ServiceName}</TableCell>

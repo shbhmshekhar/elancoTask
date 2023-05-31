@@ -6,10 +6,10 @@ import TableCell from '@mui/material/TableCell';
 import { visuallyHidden } from '@mui/utils';
 import Box from '@mui/material/Box';
 
-import { ROOT, Order, HeadCell } from '../../models';
+import { ROOT, Order, HeadCell, TableHeader } from '../../models';
 
 interface TableHeadProps {
-    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof ROOT) => void;
+    onRequestSort: (event: React.MouseEvent<unknown>, property: keyof TableHeader) => void;
     order: Order;
     orderBy: string;
     rowCount: number;
@@ -20,7 +20,7 @@ interface TableHeadProps {
     const { order, orderBy, onRequestSort } =
       props;
     const createSortHandler =
-      (property: keyof ROOT) => (event: React.MouseEvent<unknown>) => {
+      (property: keyof TableHeader) => (event: React.MouseEvent<unknown>) => {
         onRequestSort(event, property);
       };
   
@@ -64,6 +64,17 @@ interface TableHeadProps {
             numeric: true,
             disablePadding: false,
             label: 'ResourceLocation',
+          },{
+            id: 'environment',
+            numeric: true,
+            disablePadding: false,
+            label: 'environment',
+          },
+          {
+            id: 'business-unit',
+            numeric: true,
+            disablePadding: false,
+            label: 'business-unit',
           },{
             id: 'UnitOfMeasure',
             numeric: true,

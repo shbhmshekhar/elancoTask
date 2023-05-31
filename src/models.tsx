@@ -14,7 +14,7 @@ export interface ROOT {
   ServiceName: string
 }
 
-export interface Tags {
+ export interface Tags {
   "app-name": string
   environment: string
   "business-unit": string
@@ -22,9 +22,25 @@ export interface Tags {
 
 export type Order = 'asc' | 'desc';
 
+export interface TableHeader{
+  ConsumedQuantity: string
+  Cost: string
+  Date: string
+  InstanceId: string
+  MeterCategory: string
+  ResourceGroup: string
+  ResourceLocation: string
+  environment: string
+  "business-unit": string
+  UnitOfMeasure: string
+  Location: string
+  ServiceName: string
+
+}
+
 export interface HeadCell {
   disablePadding: boolean;
-  id: keyof ROOT;
+  id: keyof TableHeader;
   label: string;
   numeric: boolean;
 }

@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import logo from './logo.svg';
 import './App.css';
 import DataTable from './components/table/DataTable';
 import {DATA} from './models';
@@ -8,8 +7,10 @@ import Dropdown from './components/dropdown/Dropdown';
 function App() {
 
   const [data, setData] = useState<DATA>([]);
-  const[dropDownAPIData, setDropDownAPIData] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const[applicationDropDownAPIData, setApplicationDropDownAPIData] = useState([]);
+  const [applicationSelectedOption, setApplicationSelectedOption] = useState('All');
+  const [resourcesDropDownData, setResourcesDropDownData] = useState([]);
+  const [selectedResource, setSelectedResource] = useState('All');
 
 const getData1 = async (url:string) => {
   try{
@@ -26,26 +27,44 @@ const getData1 = async (url:string) => {
       (async()=> {
       const tableData = await getData1('https://engineering-task.elancoapps.com/api/raw');
       setData(tableData);
-      const dropdownApiData = await getData1('https://engineering-task.elancoapps.com/api/applications');
-      setDropDownAPIData(dropdownApiData);
+      const appDropdownApiData = await getData1('https://engineering-task.elancoapps.com/api/applications');
+      setApplicationDropDownAPIData(appDropdownApiData);
+      const resDropdownApiData = await getData1('https://engineering-task.elancoapps.com/api/resources');
+      setResourcesDropDownData(resDropdownApiData);
     })()
   }, []);
 
   useEffect(()=> {
-    console.log("selectedOption", selectedOption);
-    if(selectedOption!==null || selectedOption !=='All'){
+    if(applicationSelectedOption ==='All'){
+     setData(prevState => prevState)
+    }else{
       (async ()=> {
-        const tableData = await getData1(`https://engineering-task.elancoapps.com/api/applications/${selectedOption}`);
-        console.log("tableData",tableData, `https://engineering-task.elancoapps.com/api/applications/${selectedOption}`);
-        // setData(tableData);
+        const tableData = await getData1(`https://engineering-task.elancoapps.com/api/applications/${applicationSelectedOption}`);
+        setData(tableData);
       })()
     }
     
-  },[selectedOption])
+  },[applicationSelectedOption])
+
+  useEffect(()=> {
+    if(selectedResource ==='All'){
+      setData(prevState => prevState)
+     }else{
+       (async ()=> {
+         const tableData = await getData1(`https://engineering-task.elancoapps.com/api/resources/${selectedResource}`);
+         setData(tableData);
+       })()
+     }
+  },[selectedResource])
+
+
 
   return (
     <div className="App">
-      <Dropdown data={dropDownAPIData} setSelectedOption={setSelectedOption}/>
+      <div className='dropdown__container'>
+      <Dropdown data={applicationDropDownAPIData} setSelectedOption={setApplicationSelectedOption} label={'Application'}/>
+      <Dropdown data={resourcesDropDownData} setSelectedOption={setSelectedResource} label={'Resources'}/>
+      </div>
      <DataTable tableData = {data} />
     </div>
   );

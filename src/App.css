@@ -6,3 +6,6 @@
   background:#FFF5E2;
 }
 
+.dropdown__container{
+  display: flex;
+}

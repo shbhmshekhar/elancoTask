@@ -7,10 +7,11 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 interface props{
   data:string[],
   setSelectedOption:any
+  label:string
 }
 
  const Dropdown = (props:props) =>{
-  const{data, setSelectedOption} = props
+  const{data, setSelectedOption, label} = props
   const [option, setOption] = React.useState('');
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -21,13 +22,13 @@ interface props{
   return (
     <div>
       <FormControl variant='standard' sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id='demo-simple-select-standard-label'>Applications</InputLabel>
+        <InputLabel id='demo-simple-select-standard-label'>{label}</InputLabel>
         <Select
           labelId='demo-simple-select-standard-label'
           id='demo-simple-select-standard'
           value={option}
           onChange={handleChange}
-          label='Applications'
+          label={label}
         >
           <MenuItem value='All'>  
             <em>All</em>
